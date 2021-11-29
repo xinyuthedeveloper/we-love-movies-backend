@@ -10,4 +10,8 @@ router.route("/:movieId")
     .get(controller.read)
     .all(MethodNotAllowed);
 
+router.route("/:movieId/theaters")
+    .get(controller.readTheaters)
+    .all(MethodNotAllowed);
+
 module.exports = router;
