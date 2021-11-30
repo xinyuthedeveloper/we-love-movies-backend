@@ -8,8 +8,8 @@ async function list(req, res, next) {
 
 async function movieExists(req, res, next) {
     const { movieId } = req.params;
-    if (movieId) {
-        const movie = await service.read(movieId);
+    const movie = await service.read(movieId);
+    if (movie) {
         res.locals.movie = movie;
         return next();
     }
