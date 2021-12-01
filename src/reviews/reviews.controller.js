@@ -1,11 +1,5 @@
 const service = require("./reviews.service");
 
-async function read(req, res) {
-    const { reviewId } = req.params;
-    const data = await service.read(reviewId);
-    res.json({ data });
-}
-
 async function reviewExists(req, res, next) {
     const { reviewId } = req.params;
     const review = await service.read(reviewId);
@@ -16,12 +10,18 @@ async function reviewExists(req, res, next) {
     next({ status: 404, message: `/cannot be found/${reviewId}` });
 }
 
-async function update(req, res) {
+async function read(req, res) {
     const { reviewId } = req.params;
-    const { data } = req.body;
-    await service.update(data, reviewId);
-    const updatedRecord = await service.read();
-    res.json({ data: updatedRecord });
+    const data = await service.read(reviewId);
+    res.json({ data })
+}
+
+async function update(req, res, next) {
+    const updateReview = req.body.data;
+    const { review_id } = res.locals.review;
+    await service.update(review_id, updateReview);
+    const data = await service.readUpdatedReview(review_id)
+    res.json({ data });
 }
 
 async function destory(req, res) {
@@ -32,6 +32,6 @@ async function destory(req, res) {
 
 module.exports = {
     read: [reviewExists, read],
-    update: [reviewExists],
+    update: [reviewExists, update],
     delete: [reviewExists, destory,]
 }

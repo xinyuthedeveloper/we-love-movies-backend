@@ -13,6 +13,7 @@ const notFound = require("./errors/NotFound");
 const app = express();
 
 app.use(cors());
+app.use(express.json())
 
 app.use("/theaters", theatersRouter);
 app.use("/movies", moviesRouter);
