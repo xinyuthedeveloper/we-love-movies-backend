@@ -24,7 +24,14 @@ async function update(req, res) {
     res.json({ data: updatedRecord });
 }
 
+async function destory(req, res) {
+    const { reviewId } = req.params;
+    await service.destory(reviewId);
+    res.sendStatus(204);
+}
+
 module.exports = {
     read: [reviewExists, read],
     update: [reviewExists],
+    delete: [reviewExists, destory,]
 }
