@@ -4,8 +4,6 @@ exports.up = function(knex) {
         table.boolean("is_showing");
         table.integer("theater_id").unsigned().notNullable();
         table.integer("movie_id").unsigned().notNullable();
-        table.timestamp("created_at").defaultTo(knex.fn.now());
-        table.timestamp("updated_at").defaultTo(knex.fn.now());
         table
             .foreign("theater_id")
             .references("theater_id")
